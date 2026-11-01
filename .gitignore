@@ -1,0 +1,4 @@
+.DS_Store
+*.skill
+perf-audit-sql/
+PERF_AUDIT.md

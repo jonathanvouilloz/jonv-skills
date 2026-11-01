@@ -1,0 +1,19 @@
+{
+  "name": "jonv-skills",
+  "owner": {
+    "name": "Jonathan Vouilloz"
+  },
+  "metadata": {
+    "description": "Agent skills for building business web apps",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "perf-audit",
+      "description": "Read-only performance audit of a business web app with a prioritized report (quick wins, P1/P2/P3). Never modifies code.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/perf-audit"]
+    }
+  ]
+}
