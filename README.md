@@ -29,6 +29,22 @@ Or copy a folder from `skills/` into `~/.claude/skills/` (all projects) or `.cla
 
 Each skill is versioned on its own: see its `CHANGELOG.md`. Releases are tagged `<skill>@<version>`, for example `perf-audit@1.0.0`.
 
+## Repository layout
+
+```
+skills/<name>/        one folder per skill: SKILL.md, README.md, README.fr.md, CHANGELOG.md,
+                      plus optional references/, scripts/, examples/
+template/             starting point for a new skill
+.claude-plugin/       marketplace.json, one plugin entry per skill
+```
+
+## Adding a skill
+
+1. `cp -r template skills/<name>` and replace `skill-name` everywhere (the `name:` in `SKILL.md` must match the folder).
+2. Add an entry to `plugins` in `.claude-plugin/marketplace.json` with `"skills": ["./skills/<name>"]`.
+3. Add a row to the Skills table in `README.md` and `README.fr.md`.
+4. Commit, then tag `<name>@1.0.0`.
+
 ## Contributing
 
 Issues and pull requests are welcome, especially feedback from real audits on stacks I use less (.NET, JVM, PHP, Rails).
