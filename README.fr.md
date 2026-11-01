@@ -14,12 +14,12 @@ Les skills d'agent que j'utilise pour créer des applications web métier pour m
 
 Installer un skill avec le CLI skills :
 ```bash
-npx skills add jonv/jonv-skills --skill perf-audit
+npx skills add jonathanvouilloz/jonv-skills --skill perf-audit
 ```
 
 Ou ajouter toute la collection comme marketplace de plugins Claude Code :
 ```
-/plugin marketplace add jonv/jonv-skills
+/plugin marketplace add jonathanvouilloz/jonv-skills
 /plugin install perf-audit@jonv-skills
 ```
 

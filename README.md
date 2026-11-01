@@ -14,12 +14,12 @@ Agent skills I use to build business web apps for clients, published so others c
 
 Install one skill with the skills CLI:
 ```bash
-npx skills add jonv/jonv-skills --skill perf-audit
+npx skills add jonathanvouilloz/jonv-skills --skill perf-audit
 ```
 
 Or add the whole collection as a Claude Code plugin marketplace:
 ```
-/plugin marketplace add jonv/jonv-skills
+/plugin marketplace add jonathanvouilloz/jonv-skills
 /plugin install perf-audit@jonv-skills
 ```
 

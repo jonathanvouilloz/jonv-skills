@@ -49,14 +49,14 @@ For Convex, the skill recommends using the official `convex-performance-audit` s
 
 **With the skills CLI** (Claude Code and other agents that support SKILL.md):
 ```bash
-npx skills add jonv/jonv-skills --skill perf-audit
+npx skills add jonathanvouilloz/jonv-skills --skill perf-audit
 ```
 
 **Manually in Claude Code**: copy `skills/perf-audit/` into `~/.claude/skills/perf-audit/` (all projects) or `.claude/skills/perf-audit/` (one project).
 
 **As a Claude Code plugin**:
 ```
-/plugin marketplace add jonv/jonv-skills
+/plugin marketplace add jonathanvouilloz/jonv-skills
 /plugin install perf-audit@jonv-skills
 ```
 
