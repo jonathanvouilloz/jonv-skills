@@ -13,7 +13,18 @@
       "description": "Read-only performance audit of a business web app with a prioritized report (quick wins, P1/P2/P3). Never modifies code.",
       "source": "./",
       "strict": false,
-      "skills": ["./skills/perf-audit"]
+      "skills": [
+        "./skills/perf-audit"
+      ]
+    },
+    {
+      "name": "sales-call-deck",
+      "description": "Turns a discovery-call transcript and a proposal into a self-contained HTML sales deck with a presenter view (client quotes, questions, objection cheat sheet).",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/sales-call-deck"
+      ]
     }
   ]
 }

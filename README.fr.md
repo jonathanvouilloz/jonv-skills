@@ -9,6 +9,7 @@ Les skills d'agent que j'utilise pour créer des applications web métier pour m
 | Skill | Ce qu'il fait | Statut |
 |---|---|---|
 | [perf-audit](skills/perf-audit/README.fr.md) | Audit de performance en lecture seule d'une app web métier (base, ORM, backend, cache, web, mobile). Écrit un rapport priorisé avec quick wins et priorités P1/P2/P3. Ne modifie jamais le code. | Stable — v1.0.0 |
+| [sales-call-deck](skills/sales-call-deck/README.fr.md) | Transforme la transcription d'un appel découverte et une proposition en deck HTML autonome pour l'appel de vente, avec vue présentateur : citations du prospect, questions à poser, antisèche d'objections. | Stable — v1.0.0 |
 
 ## Installation
 
