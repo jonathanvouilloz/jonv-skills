@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Une seule famille, Inter Tight : la lisibilité avant tout en partage d'écran. */
+:root{
+  --bg:#FFFFFF; --ink:#141414; --soft:#555; --muted:#8A8A8A; --line:#E7E7E7; --fill:#F6F6F6;
+  --accent:#B5735F;                 /* terracotta, son décor phare */
+  --tint:rgba(181,115,95,.20);      /* l'accent à 20 % */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0E0E0E;font-family:"Inter Tight",Inter,system-ui,sans-serif;color:var(--ink)}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.deck{color:var(--ink);width:1280px;height:720px;position:relative;transform-origin:center center;flex:none}
+.slide{position:absolute;inset:0;background:var(--bg);overflow:hidden;display:none}
+.slide.on{display:block}
+.pad{position:absolute;inset:0;padding:72px 88px 80px}
+.foot{position:absolute;left:88px;right:88px;bottom:28px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+.foot img{height:18px}
+.foot .r{display:flex;align-items:center;gap:14px}
+h1{font-weight:600;font-size:72px;line-height:1.02;letter-spacing:-.03em}
+h2{font-weight:600;font-size:48px;line-height:1.08;letter-spacing:-.025em;margin-bottom:34px}
+.lead{font-size:22px;line-height:1.5;color:var(--soft);max-width:760px}
+.body{font-size:18px;line-height:1.55;color:var(--soft)}
+.ph{background-size:cover;background-position:center;border-radius:6px}
+.cols{display:grid;gap:40px}
+.item h3{font-size:21px;font-weight:600;margin-bottom:8px;line-height:1.3}
+.item p{font-size:17px;line-height:1.5;color:var(--soft)}
+.rule{border-top:1px solid var(--line);padding-top:20px}
+.quote{font-size:52px;font-weight:500;line-height:1.15;letter-spacing:-.025em;max-width:1080px}
+.said{font-size:20px;line-height:1.45}
+.said small{display:block;font-size:14px;color:var(--muted);margin-bottom:8px}
+
+/* slides de parcours : texte à gauche, preuve visuelle à droite */
+.split{display:grid;grid-template-columns:400px 1fr;gap:56px;height:100%;align-items:center}
+.stepno{font-size:15px;color:var(--muted);margin-bottom:22px}
+.stepno b{color:var(--ink);font-weight:600}
+.dots{display:flex;gap:6px;margin-bottom:28px}.dots i{width:28px;height:3px;background:var(--line);display:block}.dots i.on{background:var(--ink)}
+.split h2{font-size:44px;margin-bottom:20px}
+.who{font-size:16px;margin-top:22px;color:var(--accent);font-weight:500}
+
+/* maquettes */
+.frame{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.frame .url{height:30px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 14px;font-size:12px;color:var(--muted);gap:6px}
+.frame .url i{width:8px;height:8px;border-radius:50%;background:#E2E2E2;display:block}
+.frame .url span{margin-left:10px}
+.btn{display:inline-block;background:var(--ink);color:#fff;font-size:13px;font-weight:500;padding:11px 20px;border-radius:999px}
+.btn.o{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.btn.w{background:#fff;color:var(--ink)}
+.small{font-size:12.5px;color:var(--muted)}
+.row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.row.t{font-weight:600;border-bottom:1px solid var(--ink)}
+.row.m{color:var(--muted);border:0}
+
+/* site */
+.snav{display:flex;align-items:center;justify-content:space-between;padding:12px 22px}
+.snav img{height:34px;width:34px;border-radius:50%}
+.snav .links{display:flex;gap:22px;font-size:12.5px;color:#333;align-items:center}
+.hero{margin:0 22px;height:300px;border-radius:12px;background-size:cover;background-position:center 40%;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff}
+.hero::before{content:"";position:absolute;inset:0;background:rgba(20,16,12,.42)}
+.hero > *{position:relative}
+.hero .h{font-size:56px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.hero p{font-size:14px;margin:12px 0 18px;opacity:.92}
+.srow{display:grid;grid-template-columns:repeat(3,1fr);margin:18px 22px 0;border-top:1px solid var(--line)}
+.srow div{padding:12px 0 0}.srow b{font-size:17px;font-weight:600;display:block}.srow small{font-size:12px;color:var(--muted)}
+
+/* chat */
+.chat{padding:22px 26px;font-size:14.5px;line-height:1.55}
+.chat .me{margin-left:auto;max-width:70%;background:var(--fill);padding:10px 14px;border-radius:16px;margin-bottom:18px;width:fit-content}
+.chat .card{display:flex;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:12px;align-items:center}
+.chat .card .ph{width:64px;height:64px;flex:none}
+
+/* décors */
+.decors{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.dec .sw{height:74px;border-radius:4px;background-size:cover;background-position:center;outline:1px solid transparent;outline-offset:3px}
+.dec.sel .sw{outline:2px solid var(--ink)}
+.dec span{display:block;font-size:12px;margin-top:7px;color:#333}
+
+/* document devis */
+.paper{background:#fff;border:1px solid var(--line);border-radius:6px;padding:26px 28px;box-shadow:0 1px 0 var(--line)}
+.paper img{width:44px;height:44px;border-radius:50%}
+
+/* téléphone */
+.phone{width:300px;height:560px;border-radius:44px;border:10px solid #141414;background-size:cover;background-position:center;position:relative;overflow:hidden;margin:0 auto}
+.phone .time{color:#fff;text-align:center;font-size:58px;font-weight:500;margin-top:70px;letter-spacing:-.02em;text-shadow:0 1px 6px rgba(0,0,0,.25)}
+.phone .date{color:#fff;text-align:center;font-size:15px;text-shadow:0 1px 6px rgba(0,0,0,.25)}
+.notif{position:absolute;left:12px;right:12px;background:rgba(255,255,255,.92);border-radius:16px;padding:11px 13px;font-size:13px;line-height:1.4}
+.notif b{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-bottom:2px}
+
+/* agenda */
+.cal{display:grid;grid-template-columns:44px repeat(7,1fr);font-size:12px}
+.cal .h{padding:8px 6px;border-bottom:1px solid var(--line);color:var(--muted)}
+.cal .h b{display:block;color:var(--ink);font-size:16px;font-weight:600}
+.cal .c{border-left:1px solid var(--line);height:300px;position:relative}
+.cal .ev{position:absolute;left:4px;right:4px;border-radius:4px;padding:5px 6px;font-size:11.5px;line-height:1.3;background:var(--fill)}
+.cal .ev.new{background:var(--tint);outline:1.5px solid var(--accent)}
+.cal .hr{color:var(--muted);font-size:11px;padding-top:2px}
+
+/* tableau de bord */
+.dash{display:grid;grid-template-columns:170px 1fr;height:100%}
+.dash .side{border-right:1px solid var(--line);padding:16px 14px;font-size:13px;color:#555}
+.dash .side img{height:30px;width:30px;border-radius:50%;margin-bottom:22px}
+.dash .side div{padding:7px 8px;border-radius:4px;margin-bottom:2px}
+.dash .side .on{background:var(--tint);color:var(--ink);font-weight:500}
+.dash .main{padding:18px 24px}
+.kp{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:12px}
+.kp small{font-size:12px;color:var(--muted)}
+.kp b{display:block;font-size:26px;font-weight:500;margin-top:2px;font-variant-numeric:tabular-nums}
+.warn{font-size:13px;padding:9px 12px;background:var(--tint);border-radius:4px;margin-bottom:10px}
+table.t{width:100%;border-collapse:collapse;font-size:13px}
+table.t th{text-align:left;font-weight:500;color:var(--muted);padding:8px 8px 8px 0;border-bottom:1px solid var(--line);font-size:12px}
+table.t td{padding:10px 8px 10px 0;border-bottom:1px solid var(--line)}
+table.t tr.c td{background:var(--tint)}
+table.t .a{color:var(--accent);font-weight:500}
+.bar{height:8px;background:var(--ink);border-radius:2px}
+
+/* récap */
+.recap{width:100%;border-collapse:collapse}
+.recap td{padding:15px 0;border-bottom:1px solid var(--line);font-size:18px;vertical-align:top}
+.recap td:first-child{width:50%;color:var(--soft);padding-right:40px}
+.recap td:last-child{font-weight:500}
+
+/* prix */
+.opts{display:grid;grid-template-columns:.8fr 1.25fr;gap:32px;align-items:end}
+.opt{border:1px solid var(--line);border-radius:10px;padding:26px 30px}
+.opt.big{background:var(--ink);color:#fff;border-color:var(--ink);padding:34px 40px}
+.opt .name{font-size:18px;font-weight:600}
+.opt .price{font-size:52px;font-weight:600;letter-spacing:-.03em;line-height:1;margin:12px 0 4px}
+.opt.big .price{font-size:72px}
+.opt .val{font-size:15px;color:var(--muted)}
+.opt.big .val{color:#A9A9A9}
+.opt ul{list-style:none;margin-top:18px}
+.opt li{font-size:15.5px;padding:8px 0;border-top:1px solid var(--line);color:var(--soft);line-height:1.4}
+.opt.big li{border-color:#333;color:#E6E6E6;font-size:16.5px}
+.opt .pay{margin-top:14px;font-size:14px;line-height:1.6;color:var(--soft)}
+.opt.big .pay{color:#CFCFCF}
+
+/* ---------- vue présentateur ---------- */
+body.presenter{background:#121212;color:#E9E9E9}
+#pres{display:none;height:100vh;grid-template-columns:1.25fr 1fr;grid-template-rows:auto 1fr;gap:14px;padding:14px}
+body.presenter #pres{display:grid}
+body.presenter #stage{display:none}
+.ph-top{grid-column:1 / 3;display:flex;align-items:center;gap:14px;font-size:14px;color:#9a9a9a}
+.ph-top b{color:#fff;font-size:18px}
+.ph-top .timer{font-size:22px;color:#fff;margin-left:auto;font-variant-numeric:tabular-nums}
+.ph-top button{background:#222;color:#eee;border:1px solid #333;border-radius:6px;padding:7px 12px;cursor:pointer;font-size:13px;font-family:inherit}
+#notes{background:#1A1A1A;border:1px solid #2A2A2A;border-radius:10px;padding:24px 28px;overflow:auto;font-size:18px;line-height:1.55}
+#notes h5{font-size:14px;font-weight:600;color:#E7B4A4;margin:20px 0 8px}
+#notes h5:first-child{margin-top:0}
+#notes .mot{background:#262220;padding:9px 13px;border-radius:6px;margin:6px 0;color:#F2E9E1}
+#notes .mot small{color:#8f8f8f;margin-left:8px;font-size:13px}
+#notes .ask{background:#1D2A24;padding:9px 13px;border-radius:6px;margin:8px 0;color:#DDF3EA}
+#notes .ask::before{content:"Question  ";font-weight:600;color:#7FD6B4}
+#notes .do{color:#D2D2D2;margin:4px 0}
+.rightcol{display:grid;grid-template-rows:auto auto 1fr;gap:12px;min-height:0}
+.mini{background:#000;border-radius:8px;overflow:hidden;position:relative;aspect-ratio:16/9}
+.mini .deck{position:absolute;left:0;top:0;transform-origin:0 0}
+.next{font-size:14px;color:#9a9a9a}.next b{color:#fff}
+#obj{background:#1A1A1A;border:1px solid #2A2A2A;border-radius:10px;padding:16px 18px;overflow:auto;font-size:15px;line-height:1.5}
+#obj h6{font-size:14px;font-weight:600;color:#7FD6B4;margin:0 0 8px}
+#obj details{border-top:1px solid #2A2A2A;padding:9px 0}
+#obj summary{cursor:pointer;font-weight:600;color:#fff}
+#obj details p{margin:6px 0 0 14px;color:#D2D2D2}
+#obj .rules{color:#BDBDBD;margin-bottom:6px}
+.help{transition:opacity 1s;position:fixed;left:50%;transform:translateX(-50%);top:10px;background:#000c;padding:6px 12px;border-radius:6px;color:#ddd;font-size:12px}
+body.presenter .help{display:none}
+</style>
+</head>
+<body>
+<div id="stage"><div class="deck" id="deck"></div></div>
+<div id="pres">
+  <div class="ph-top">
+    <b id="pcount">1 / 1</b><span id="ptitle"></span>
+    <button onclick="go(cur-1)">← Précédente</button><button onclick="go(cur+1)">Suivante →</button>
+    <button onclick="t0=Date.now()">Remettre le chrono</button>
+    <span class="timer" id="timer">00:00</span>
+  </div>
+  <div id="notes"></div>
+  <div class="rightcol"><div class="mini" id="mini"></div><div class="next" id="next"></div><div id="obj"></div></div>
+</div>
+<div class="help">← → pour avancer · P : vue présentateur · F : plein écran</div>
+
+<script>
+const IMG = {{IMAGES_JSON}};
+const U = k => `url(${IMG[k]})`;
+const FOOT = n => `<div class="foot"><span>${DECK.footer}</span><span class="r">${IMG.jl ? `<img src="${IMG.jl}" alt="">` : ''}${n}</span></div>`;
+/* Couverture : la photo occupe la droite, le pied de page reste à gauche. */
+const FOOT_COVER = () => `<div class="foot" style="right:auto;gap:18px;justify-content:flex-start">${IMG.jl ? `<img src="${IMG.jl}" alt="">` : ''}<span>${DECK.footer}</span></div>`;
+const mot = (t, ts) => `<div class="mot">« ${t} »<small>${ts}</small></div>`;
+const ask = t => `<div class="ask">${t}</div>`;
+const URL = (u, h, body) => `<div class="frame" style="height:${h}px"><div class="url"><i></i><i></i><i></i><span>${u}</span></div>${body}</div>`;
+
+/* Une étape du parcours : texte à gauche, ce qu'il verra à droite. */
+const STEP = (n, title, line, who, visual) => `
+  <div class="pad"><div class="split">
+    <div>
+      <div class="dots">${Array.from({length:DECK.steps||6},(_,k)=>k+1).map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div>
+      <h2>${title}</h2>
+      <p class="lead" style="font-size:20px">${line}</p>
+      <div class="who">${who}</div>
+    </div>
+    <div>${visual}</div>
+  </div></div>${FOOT(String((DECK.stepOffset||6)+n))}`;
+
+{{SLIDES_JS}}
+/* ---------- moteur ---------- */
+const isPresenter = location.search.includes('presenter');
+let cur = 0, other = null, t0 = Date.now();
+const deck = document.getElementById('deck');
+function render(target){ target.innerHTML = SLIDES.map((s,i)=>`<section class="slide">${s.html}</section>`).join(''); }
+function fit(){
+  const s = Math.min(innerWidth/1280, innerHeight/720);
+  deck.style.transform = `scale(${s})`;
+  const mini = document.querySelector('#mini .deck');
+  if (mini){ const w = document.getElementById('mini').clientWidth; mini.style.transform = `scale(${w/1280})`; }
+}
+function show(i){
+  cur = Math.max(0, Math.min(SLIDES.length-1, i));
+  document.querySelectorAll('.deck').forEach(d => d.querySelectorAll('.slide').forEach((el,k)=>el.classList.toggle('on', k===cur)));
+  if (isPresenter){
+    document.getElementById('pcount').textContent = `${cur+1} / ${SLIDES.length}`;
+    document.getElementById('ptitle').textContent = SLIDES[cur].t;
+    document.getElementById('notes').innerHTML = SLIDES[cur].notes;
+    document.getElementById('next').innerHTML = cur < SLIDES.length-1 ? `Ensuite : <b>${SLIDES[cur+1].t}</b>` : '<b>Dernière slide</b>';
+  }
+  try { localStorage.setItem('sales-deck-cur', cur); } catch(e){}
+}
+function go(i){ show(i); const msg = {deckGo: cur}; if (other && !other.closed) other.postMessage(msg,'*'); if (window.opener) window.opener.postMessage(msg,'*'); }
+addEventListener('message', e => { if (e.data && typeof e.data.deckGo === 'number') show(e.data.deckGo); });
+addEventListener('keydown', e => {
+  if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); go(cur+1); }
+  if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); go(cur-1); }
+  if (e.key === 'p' || e.key === 'P') { other = window.open(location.pathname + '?presenter', 'sales-deck-presenter', 'width=1400,height=850'); setTimeout(()=>other && other.postMessage({deckGo: cur},'*'), 600); }
+  if (e.key === 'f' || e.key === 'F') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+});
+deck.addEventListener('click', () => go(cur+1));
+render(deck);
+if (isPresenter){
+  document.body.classList.add('presenter');
+  const m = document.createElement('div'); m.className = 'deck'; document.getElementById('mini').appendChild(m); render(m);
+  document.getElementById('obj').innerHTML = OBJECTIONS;
+  setInterval(()=>{ const s = Math.floor((Date.now()-t0)/1000); document.getElementById('timer').textContent = String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }, 1000);
+}
+addEventListener('resize', fit); fit();
+setTimeout(()=>{ const h=document.querySelector('.help'); if(h) h.style.opacity=0; }, 5000);
+if (location.hash) { const h=document.querySelector('.help'); if(h) h.style.display='none'; }
+let start = 0; try { start = +localStorage.getItem('sales-deck-cur') || 0; } catch(e){}
+const h = parseInt(location.hash.slice(1)); if (h) start = h-1;
+show(isPresenter || h ? start : 0);
+
+</script>
+</body>
+</html>

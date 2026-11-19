@@ -9,6 +9,7 @@ Agent skills I use to build business web apps for clients, published so others c
 | Skill | What it does | Status |
 |---|---|---|
 | [perf-audit](skills/perf-audit/) | Read-only performance audit of a business web app (database, ORM, backend, cache, web, mobile). Writes a prioritized report with quick wins and P1/P2/P3 priorities. Never modifies code. | Stable — v1.0.0 |
+| [sales-call-deck](skills/sales-call-deck/) | Turns a discovery-call transcript and a proposal into a self-contained HTML deck for a sales call, with a presenter view: the prospect's quotes, questions to ask, objection cheat sheet. Instructions in French. | Stable — v1.0.0 |
 
 ## Install
 
